@@ -1,0 +1,381 @@
+  <!doctype html>
+  <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CIPHER SUTRA: Indian Knowledge Systems and Cryptography</title>
+  <meta name="description" content="CIPHER SUTRA is an educational site on Indian Knowledge Systems, ancient number encoding and modern cryptography, with an interactive Cipher Lab.">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500;700&display=swap">
+  <style>
+  body{margin:0;font-family:Poppins,system-ui,sans-serif;color:#101F35;background:#F4EBDD}
+  a{color:#101F35}a:hover{color:#B65C42}
+  h1,h2,h3{font-family:Cinzel,Georgia,serif;margin:0}
+  @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .fl{animation:fl 6s ease-in-out infinite}.sp{animation:sp 60s linear infinite}
+  .card{transition:transform .25s,box-shadow .25s}.card:hover{transform:translateY(-6px);box-shadow:0 0 0 2px #D5A64A,0 12px 28px rgba(213,166,74,.35)}
+  .band{height:10px;background:repeating-linear-gradient(45deg,#D5A64A 0 8px,#B65C42 8px 16px,#176B63 16px 24px,#754C78 24px 32px)}
+  .dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(213,166,74,.22) 1.5px,transparent 2px);background-size:28px 28px}
+  .glow{text-shadow:0 0 28px rgba(213,166,74,.7)}
+  @media (prefers-reduced-motion:reduce){.fl,.sp{animation:none}.card{transition:none}}
+  .nl{position:relative;padding:6px 0}.nl:after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:#D5A64A;transition:width .3s}.nl:hover:after{width:100%}
+  @keyframes rise{from{opacity:0;transform:translateY(24px) scale(.8)}to{opacity:1;transform:none}}
+  @keyframes orb{to{transform:rotate(360deg)}}
+  @keyframes sweep{0%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+  .lt{display:inline-block;opacity:0;animation:rise .6s forwards}
+  .orb{position:absolute;inset:0;animation:orb 9s linear infinite}
+  .pan{grid-area:1/1;transition:opacity .8s,transform .8s}
+  .bin{font:11px monospace;color:rgba(213,166,74,.12);word-break:break-all;line-height:1.6;position:absolute;inset:0;overflow:hidden}
+  .lf{transition:transform .5s}
+  @media (prefers-reduced-motion:reduce){.lt{animation:none;opacity:1}.orb,.pan,.lf{animation:none;transition:none}}
+  </style>
+
+  <style>html{scroll-behavior:smooth;scroll-padding-top:64px}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
+  </head>
+  <body>
+  <div id="app"></div>
+  <template id="tpl">
+
+  <div style="min-height:100%;box-sizing:border-box">
+  <sc-if value="{{intro}}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:100;background:#101F35;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;overflow:hidden">
+  <div style="position:relative;width:150px;height:150px;display:flex;align-items:center;justify-content:center">
+  <div class="orb" aria-hidden="true"><span style="position:absolute;left:50%;top:0;width:8px;height:8px;border-radius:50%;background:#D5A64A;box-shadow:0 0 12px #D5A64A"></span><span style="position:absolute;left:0;top:50%;width:6px;height:6px;border-radius:50%;background:#D5A64A"></span><span style="position:absolute;right:0;top:60%;width:5px;height:5px;border-radius:50%;background:#D5A64A"></span></div>
+  <div style="font:700 78px 'Noto Sans Devanagari',serif;color:#D5A64A;text-shadow:0 0 30px #D5A64A" aria-hidden="true">ॐ</div></div>
+  <h1 style="font-size:40px;color:#D5A64A;letter-spacing:.08em"><span class="lt" style="animation-delay:0.2s">C</span><span class="lt" style="animation-delay:0.3s">I</span><span class="lt" style="animation-delay:0.4s">P</span><span class="lt" style="animation-delay:0.5s">H</span><span class="lt" style="animation-delay:0.6s">E</span><span class="lt" style="animation-delay:0.7s">R</span><span class="lt" style="animation-delay:0.8s">&nbsp;</span><span class="lt" style="animation-delay:0.9s">S</span><span class="lt" style="animation-delay:1.0s">U</span><span class="lt" style="animation-delay:1.1s">T</span><span class="lt" style="animation-delay:1.2s">R</span><span class="lt" style="animation-delay:1.3s">A</span></h1>
+  <p class="lt" style="color:#F4EBDD;margin:0;animation-delay:1.8s">Ancient Wisdom. Modern Security.</p>
+  <button onClick="{{skip}}" style="margin-top:10px;background:none;border:2px solid #D5A64A;color:#D5A64A;padding:10px 22px;min-height:44px;border-radius:8px;font:600 14px Poppins;cursor:pointer">Skip intro</button>
+  </div></sc-if>
+  <nav style="display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;padding:14px 40px;background:#101F35;border-bottom:3px solid #D5A64A;position:sticky;top:0;z-index:20">
+  <span style="font-family:Cinzel,serif;font-weight:700;font-size:22px;color:#D5A64A;margin-right:auto">सूत्र CIPHER SUTRA</span>
+  <a href="#iks" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">About IKS</a>
+  <a href="#timeline" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Timeline</a>
+  <a href="#branches" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Branches</a>
+  <a href="#encoding" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Knowledge &amp; Encoding</a>
+  <a href="#crypto" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Cryptography</a>
+  <a href="#lab" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Cipher Lab</a>
+  <a href="#apps" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Applications</a>
+  <a href="#team" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">Our Team</a>
+  <a href="#refs" class="nl" style="color:#F4EBDD;text-decoration:none;font-size:14px">References</a>
+  </nav>
+
+  <header onMouseMove="{{mv}}" style="position:relative;overflow:hidden;padding:80px 40px 90px;background:linear-gradient(135deg,#101F35 0%,#101F35 55%,#176B63 130%)">
+  <div class="dots" style="inset:-30px;transform:translate({{px}}px,{{py}}px)" aria-hidden="true"></div>
+  <div class="sp" style="position:absolute;right:-120px;top:-120px;width:520px;height:520px;border-radius:50%;border:2px dashed #D5A64A;opacity:.55"></div>
+  <div class="fl" style="position:absolute;right:12%;top:70px;font:700 120px 'Noto Sans Devanagari',serif;color:#D5A64A;opacity:.45;text-shadow:0 0 30px #D5A64A" aria-hidden="true">ॐ</div>
+  <div class="fl" style="position:absolute;right:30%;bottom:30px;font:700 80px 'Noto Sans Devanagari',serif;color:#F4EBDD;opacity:.3;animation-delay:2s" aria-hidden="true">क</div>
+  <div style="position:relative;max-width:760px">
+  <div style="font:600 13px Poppins;letter-spacing:.2em;color:#D5A64A">WHERE ANCIENT INDIAN WISDOM MEETS MODERN CRYPTOGRAPHY</div>
+  <h1 style="font-size:54px;line-height:1.1;margin:16px 0;color:#F4EBDD" class="glow">Explore the Legacy of Indian Knowledge Systems.</h1>
+  <p style="font-size:18px;line-height:1.65;max-width:620px;color:#F4EBDD">From Panini's grammar to Aryabhata's astronomy, India built rich traditions of learning and kept them alive through memory, manuscripts and teachers. Then see how those traditions of encoding compare with modern cryptography.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:28px">
+  <a href="#iks" style="background:#D5A64A;color:#101F35;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;box-shadow:0 0 18px rgba(213,166,74,.5)">Explore IKS</a>
+  <a href="#crypto" style="background:#176B63;color:#fff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;border:2px solid #D5A64A">Discover Cryptography</a>
+  </div></div>
+  <div style="position:relative;margin-top:44px;max-width:760px;border:1px solid #D5A64A;border-radius:16px;padding:22px;background:rgba(16,31,53,.7);box-shadow:0 0 40px rgba(213,166,74,.2);overflow:hidden">
+  <div class="bin" aria-hidden="true">10011010110101001011010110010101101001011010100101101010110010110101001011010110010101101001011010100101101010110010110101001011010110010101101001011010100101101010</div>
+  <div style="position:relative;font:600 12px Poppins;letter-spacing:.15em;color:#D5A64A">THE JOURNEY OF KNOWLEDGE</div>
+  <div style="position:relative;display:grid;min-height:150px;margin-top:8px">
+  <sc-for list="{{stg}}" as="p" hint-placeholder-count="4">
+  <div class="pan" style="opacity:{{p.op}};transform:translateY({{p.ty}}px)">
+  <div style="font:700 34px 'Noto Sans Devanagari',Cinzel,serif;color:#F4EBDD;line-height:1.3">{{p.big}}</div>
+  <sc-if value="{{p.lock}}" hint-placeholder-val="{{ false }}"><svg width="46" height="52" viewBox="0 0 46 52" role="img" aria-label="Shield with lock"><path d="M23 2 42 9v14c0 13-8 22-19 27C12 45 4 36 4 23V9z" fill="#176B63" stroke="#D5A64A" stroke-width="2"/><rect x="15" y="22" width="16" height="13" rx="2" fill="#D5A64A"/><path d="M18 22v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#D5A64A" stroke-width="2.5"/></svg></sc-if>
+  <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#F4EBDD">{{p.cap}}</p></div>
+  </sc-for></div>
+  <div style="position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+  <sc-for list="{{stg}}" as="d" hint-placeholder-count="4">
+  <button onClick="{{d.pick}}" style="padding:8px 14px;min-height:44px;border-radius:20px;border:2px solid #D5A64A;background:{{d.bg}};color:{{d.fg}};font:600 13px Poppins;cursor:pointer">{{d.t}}</button>
+  </sc-for></div></div>
+  <a href="#iks" style="position:relative;display:inline-block;margin-top:26px;color:#D5A64A;text-decoration:none;font-size:13px;letter-spacing:.15em"><span style="display:inline-block;animation:bob 2s infinite">SCROLL &#8595;</span></a>
+  </header>
+  <div class="band" aria-hidden="true"></div>
+
+  <section id="iks" style="padding:64px 40px;max-width:1100px;margin:0 auto">
+  <h2 style="font-size:34px;color:#754C78">What are Indian Knowledge Systems?</h2>
+  <p style="font-size:17px;line-height:1.7">Indian Knowledge Systems (IKS) is the umbrella term for India's long-standing bodies of knowledge in science, mathematics, medicine, language, arts, philosophy and practical craft. They were developed over thousands of years and passed on through gurukulas, scholarly lineages and written texts.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px">
+  <sc-for list="{{eras}}" as="e" hint-placeholder-count="4">
+  <div class="card" style="background:#FBF7EF;border-radius:12px;padding:20px;border-top:6px solid {{e.c}};box-shadow:0 4px 14px rgba(75,42,123,.12)">
+  <div style="font:600 13px Poppins;color:#B65C42">{{e.when}}</div>
+  <h3 style="font-size:19px;margin:6px 0">{{e.t}}</h3>
+  <p style="margin:0;font-size:15px;line-height:1.6">{{e.d}}</p></div>
+  </sc-for></div>
+  </section>
+
+  <section id="timeline" style="padding:64px 40px;max-width:900px;margin:0 auto">
+  <h2 style="font-size:34px;color:#101F35">Timeline of Learning</h2>
+  <p style="margin:8px 0 24px">Select a milestone. Dates are approximate where scholars disagree.</p>
+  <div style="border-left:4px solid #D5A64A;padding-left:24px;display:flex;flex-direction:column;gap:14px">
+  <sc-for list="{{tl}}" as="m" hint-placeholder-count="5">
+  <div style="position:relative">
+  <span style="position:absolute;left:-36px;top:14px;width:16px;height:16px;border-radius:50%;background:{{m.dot}};border:3px solid #D5A64A"></span>
+  <button onClick="{{m.toggle}}" style="width:100%;text-align:left;background:#FBF7EF;border:1px solid #D5A64A;border-radius:10px;padding:14px 18px;min-height:44px;font:600 16px Poppins;color:#101F35;cursor:pointer">{{m.when}} &middot; {{m.t}}</button>
+  <sc-if value="{{m.open}}" hint-placeholder-val="{{ false }}"><p style="margin:8px 0 0;padding:12px 18px;background:#101F35;color:#F4EBDD;border-radius:10px;line-height:1.6">{{m.d}}</p></sc-if>
+  </div></sc-for></div></section>
+
+  <section id="branches" style="padding:64px 40px;background:linear-gradient(180deg,#F4EBDD,#EADFC8)">
+  <div style="max-width:1200px;margin:0 auto">
+  <h2 style="font-size:34px;color:#176B63">Nine Branches of Knowledge</h2>
+  <p style="font-size:16px;margin:8px 0 28px">Select a card to open its details.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px">
+  <sc-for list="{{branches}}" as="b" hint-placeholder-count="9">
+  <div class="card" style="background:#FBF7EF;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.1)">
+  <div style="background:{{b.c}};color:#fff;padding:18px 20px">
+  <div style="font:700 28px 'Noto Sans Devanagari',serif">{{b.dev}}</div>
+  <h3 style="font-size:20px">{{b.name}}</h3><div style="font-size:14px">{{b.sub}}</div></div>
+  <div style="padding:18px 20px;font-size:15px;line-height:1.6">
+  <p style="margin:0 0 10px">{{b.intro}}</p>
+  <button onClick="{{b.toggle}}" style="background:none;border:2px solid {{b.c}};color:#101F35;border-radius:8px;padding:10px 16px;min-height:44px;font:600 14px Poppins;cursor:pointer">{{b.label}}</button>
+  <sc-if value="{{b.open}}" hint-placeholder-val="{{ false }}">
+  <p style="margin:12px 0 0">{{b.ov}}</p>
+  <p style="margin:10px 0 4px"><b>Key ideas</b></p>
+  <ul style="margin:0;padding-left:20px"><sc-for list="{{b.ideas}}" as="k" hint-placeholder-count="3"><li style="margin-bottom:4px">{{k.x}}</li></sc-for></ul>
+  <p style="margin:10px 0 0"><b>Texts and scholars:</b> {{b.who}}</p>
+  <p style="margin:8px 0 0"><b>Still relevant:</b> {{b.ex}}</p>
+  <p style="margin:8px 0 0;font-size:13px"><b>Source:</b> {{b.src}}</p>
+  </sc-if></div></div>
+  </sc-for></div></div>
+  </section>
+
+  <section id="encoding" style="padding:64px 40px;max-width:1100px;margin:0 auto">
+  <h2 style="font-size:34px;color:#B65C42">Knowledge Transmission and Numerical Encoding</h2>
+  <p style="font-size:17px;line-height:1.7">Before print, knowledge travelled by recitation: students memorised verse with strict metre and rules of recitation, and texts were later copied onto palm leaf and birch bark. To fit numbers into verse, scholars used word-based schemes. The <b>Katapayadi</b> system assigns digits to consonants, so a memorable word can hide a number. <b>Bhuta Sankhya</b> uses objects, like <i>eye</i> or <i>moon</i> for 2 and 1, as number words.</p>
+  <div style="background:#FBF7EF;border-radius:14px;padding:26px;margin-top:20px;box-shadow:0 4px 14px rgba(0,0,0,.1)">
+  <h3 style="font-size:22px;color:#754C78">Katapayadi Explorer</h3>
+  <p style="font-size:15px;line-height:1.6">Rules (as summarised in Śaṅkaravarman’s Sadratnamālā): n, ñ and vowels standing alone give 0; consonants from ka, ṭa, pa and ya give 1, 2, 3 ... in order; in a conjunct only the last consonant counts; the vowel is ignored. Digits are read right to left ("aṅkānāṁ vāmato gatiḥ"). Try the book’s example: nānājñānapragalbhaḥ gives 4320000.</p>
+  <label for="kp" style="font-weight:600;font-size:14px">Type syllables (e.g. ka ma la ya)</label><br>
+  <input id="kp" value="{{ktext}}" onChange="{{setK}}" style="margin-top:6px;width:100%;max-width:420px;box-sizing:border-box;padding:12px;font:16px Poppins;border:2px solid #754C78;border-radius:8px">
+  <p style="font-size:18px;margin:14px 0 0">Digits: <b>{{kdigits}}</b> &nbsp; Read right to left: <b>{{knum}}</b></p>
+  <p style="font-size:13px;margin:10px 0 0;color:#101F35">Mapping: ka kha ga gha ṅa = 1–5; ca cha ja jha ña = 6,7,8,9,0; ṭa ṭha ḍa ḍha ṇa = 1–5; ta tha da dha na = 6,7,8,9,0; pa pha ba bha ma = 1–5; ya ra la va śa ṣa sa ha ḷa = 1–9. The system is dated to the 4th century CE and attributed to the Kerala astronomer Vararuci, who stored the Moon’s position for 248 days in the Candravākyas. It is a numeral code for memory, not encryption: anyone who knows the rule can read it. Source: MoE (2025), Vol. I, Ch. 4.3.</p>
+  </div>
+  <div style="background:#FBF7EF;border-radius:14px;padding:26px;margin-top:20px;box-shadow:0 4px 14px rgba(0,0,0,.1)">
+  <h3 style="font-size:22px;color:#176B63">Bhuta Sankhya Explorer</h3>
+  <p style="font-size:15px;line-height:1.6">Number-words from nature and tradition stand for digits: <b>kha</b> (sky) 0, <b>chandra</b>, <b>indu</b>, <b>bhumi</b> (moon, earth) 1, <b>netra</b> (eyes) 2, <b>agni</b> (fire) 3, <b>veda</b> 4, <b>indriya</b> (senses) 5, <b>rudra</b> (names of Śiva) 11, <b>surya</b> (names of the Sun) 12. Words are read in order from right to left. The system is clearly used from Varāhamihira’s Pañcasiddhāntikā (c. 550 CE); earlier texts use number words occasionally. The list is representative, not complete (MoE 2025, Ch. 4.3.1). It is a way to write numbers in verse, not a secret code.</p>
+  <label for="bs" style="font-weight:600;font-size:14px">Type words (e.g. netra agni chandra, or rudra kha)</label><br>
+  <input id="bs" value="{{btext}}" onChange="{{setB}}" style="margin-top:6px;width:100%;max-width:420px;box-sizing:border-box;padding:12px;font:16px Poppins;border:2px solid #176B63;border-radius:8px">
+  <p style="font-size:18px;margin:14px 0 0">Digits: <b>{{bdigits}}</b> &nbsp; Read right to left: <b>{{bnum}}</b></p></div>
+  </section>
+
+  <section id="crypto" style="padding:64px 40px;background:#FBF7EF">
+  <div style="max-width:1100px;margin:0 auto">
+  <h2 style="font-size:34px;color:#101F35">Introduction to Cryptography</h2>
+  <p style="font-size:17px;line-height:1.7">Cryptography is the practice of protecting information so that only the intended reader can understand it. <b>Plaintext</b> is the readable message; <b>encryption</b> turns it into <b>ciphertext</b> using a <b>key</b>; <b>decryption</b> reverses it. The Caesar cipher, a simple substitution cipher, shifts each letter by a fixed number of places. Modern systems protect payments, banking, messaging and passwords with far stronger mathematics. Katapayadi and Bhuta Sankhya are different: they are numbering aids, and no source shows them as a secret-communication system.</p>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px;font-weight:600">
+  <span style="background:#FBF7EF;padding:12px 18px;border-radius:8px">Plaintext</span>→
+  <span style="background:#B65C42;color:#fff;padding:12px 18px;border-radius:8px">Encrypt + key</span>→
+  <span style="background:#FBF7EF;padding:12px 18px;border-radius:8px">Ciphertext</span>→
+  <span style="background:#176B63;color:#fff;padding:12px 18px;border-radius:8px">Decrypt + key</span>→
+  <span style="background:#FBF7EF;padding:12px 18px;border-radius:8px">Plaintext</span></div>
+  </div></section>
+
+  <div class="band" aria-hidden="true"></div>
+  <section id="lab" style="padding:64px 40px;background:linear-gradient(160deg,#101F35,#0B1626)">
+  <div style="max-width:1100px;margin:0 auto">
+  <h2 style="font-size:34px;color:#D5A64A" class="glow">Cipher Lab</h2>
+  <p style="color:#F4EBDD;font-size:16px;margin:8px 0 0">Experiment with ciphers. Everything here runs in your browser.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:20px">
+  <div style="background:#FBF7EF;border-radius:14px;padding:24px;box-shadow:0 4px 14px rgba(0,0,0,.1)">
+  <h3 style="font-size:21px;color:#B65C42">Caesar Cipher</h3>
+  <label for="ct" style="font-size:14px;font-weight:600">Message</label>
+  <input id="ct" value="{{ctext}}" onChange="{{setC}}" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:6px 0 12px;font:16px Poppins;border:2px solid #B65C42;border-radius:8px">
+  <label for="cs" style="font-size:14px;font-weight:600">Shift: {{shift}}</label>
+  <input id="cs" type="range" min="1" max="25" value="{{shift}}" onChange="{{setS}}" style="display:block;width:100%;margin:6px 0 12px">
+  <div style="display:flex;gap:10px">
+  <button onClick="{{doEnc}}" style="flex:1;padding:12px;min-height:44px;border:0;border-radius:8px;background:{{encBg}};color:#fff;font:600 15px Poppins;cursor:pointer">Encrypt</button>
+  <button onClick="{{doDec}}" style="flex:1;padding:12px;min-height:44px;border:0;border-radius:8px;background:{{decBg}};color:#fff;font:600 15px Poppins;cursor:pointer">Decrypt</button></div>
+  <p style="font:600 22px monospace;letter-spacing:.12em;word-break:break-all;margin:16px 0 0;color:#101F35">{{cout}}</p></div>
+  <div style="background:#FBF7EF;border-radius:14px;padding:24px;box-shadow:0 4px 14px rgba(0,0,0,.1)">
+  <h3 style="font-size:21px;color:#176B63">Secret Message Challenge</h3>
+  <p style="font-size:15px;line-height:1.6">Decode this message. Hint: it was shifted by 3, so shift back by 3.</p>
+  <p style="font:600 24px monospace;letter-spacing:.14em;margin:8px 0;color:#754C78">FRQJUDWXODWLRQV</p>
+  <label for="ans" style="font-size:14px;font-weight:600">Your answer</label>
+  <input id="ans" value="{{ans}}" onChange="{{setA}}" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:6px 0 12px;font:16px Poppins;border:2px solid #176B63;border-radius:8px">
+  <button onClick="{{check}}" style="padding:12px 24px;min-height:44px;border:0;border-radius:8px;background:#176B63;color:#fff;font:600 15px Poppins;cursor:pointer">Check answer</button>
+  <p style="font-size:16px;margin:14px 0 0"><b>{{verdict}}</b> &nbsp; Points: {{points}}</p></div>
+  <div style="background:#FBF7EF;border-radius:14px;padding:24px;box-shadow:0 0 30px rgba(213,166,74,.25)">
+  <h3 style="font-size:21px;color:#176B63">Cipher Wheel and Lock</h3>
+  <div style="position:relative;width:240px;height:240px;margin:14px auto;border-radius:50%;background:#101F35;border:3px solid #D5A64A">
+  <sc-for list="{{outer}}" as="o" hint-placeholder-count="26"><span style="position:absolute;left:50%;top:50%;margin:-8px;width:16px;text-align:center;font:600 12px Poppins;color:#D5A64A;transform:{{o.t}}">{{o.l}}</span></sc-for>
+  <div class="lf" style="position:absolute;inset:34px;border-radius:50%;background:#176B63;transform:rotate({{rot}}deg)">
+  <sc-for list="{{inner}}" as="o" hint-placeholder-count="26"><span style="position:absolute;left:50%;top:50%;margin:-8px;width:16px;text-align:center;font:600 12px Poppins;color:#F4EBDD;transform:{{o.t}}">{{o.l}}</span></sc-for></div>
+  <svg width="40" height="44" viewBox="0 0 40 44" style="position:absolute;left:100px;top:98px" role="img" aria-label="{{lockLabel}}"><g class="lf" style="transform:translateY({{lockY}}px)"><path d="M11 20v-6a9 9 0 0 1 18 0v6" fill="none" stroke="#D5A64A" stroke-width="4"/></g><rect x="6" y="20" width="28" height="20" rx="3" fill="#D5A64A"/></svg></div>
+  <p style="font-size:14px;margin:0;text-align:center">Outer ring: plaintext. Inner ring: ciphertext. Move the shift slider and press Encrypt or Decrypt to turn the wheel and the lock.</p></div>
+  <div style="background:#FBF7EF;border-radius:14px;padding:24px;box-shadow:0 4px 14px rgba(0,0,0,.1)">
+  <h3 style="font-size:21px;color:#754C78">Substitution Cipher</h3>
+  <label for="sk" style="font-size:14px;font-weight:600">Key: a 26-letter alphabet with no repeats</label>
+  <input id="sk" value="{{skey}}" onChange="{{setSk}}" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:6px 0 12px;font:15px monospace;border:2px solid #754C78;border-radius:8px">
+  <label for="sm" style="font-size:14px;font-weight:600">Message</label>
+  <input id="sm" value="{{smsg}}" onChange="{{setSm}}" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:6px 0 12px;font:16px Poppins;border:2px solid #754C78;border-radius:8px">
+  <p style="font-size:13px;margin:0 0 10px">The Encrypt and Decrypt buttons in the Caesar card choose the direction.</p>
+  <p style="font:600 22px monospace;letter-spacing:.12em;word-break:break-all;margin:0;color:#101F35">{{sout}}</p></div>
+  </div></div></section>
+  <section id="apps" style="padding:64px 40px;background:#F4EBDD">
+  <div style="max-width:1100px;margin:0 auto">
+  <h2 style="font-size:34px;color:#754C78">Modern Applications</h2>
+  <p style="margin:8px 0 24px;line-height:1.6">Today's cryptography relies on much stronger mathematics than a Caesar shift, but the vocabulary of keys, plaintext and ciphertext carries over.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px">
+  <div class="card" style="background:#FBF7EF;border-radius:12px;padding:20px;border-top:5px solid #176B63"><h3 style="font-size:18px">Digital Payments</h3><p style="font-size:15px;line-height:1.6;margin:8px 0 0">Card and UPI transactions are encrypted in transit so payment details are not readable on the network.</p></div>
+  <div class="card" style="background:#FBF7EF;border-radius:12px;padding:20px;border-top:5px solid #D5A64A"><h3 style="font-size:18px">Banking</h3><p style="font-size:15px;line-height:1.6;margin:8px 0 0">Online banking uses TLS to protect sessions, and banks store passwords as salted hashes.</p></div>
+  <div class="card" style="background:#FBF7EF;border-radius:12px;padding:20px;border-top:5px solid #754C78"><h3 style="font-size:18px">Secure Messaging</h3><p style="font-size:15px;line-height:1.6;margin:8px 0 0">End-to-end encryption means only the two chat participants hold the keys to read messages.</p></div>
+  <div class="card" style="background:#FBF7EF;border-radius:12px;padding:20px;border-top:5px solid #B65C42"><h3 style="font-size:18px">Cybersecurity</h3><p style="font-size:15px;line-height:1.6;margin:8px 0 0">Digital signatures and encryption protect data and software, supporting privacy.</p></div>
+  </div></div></section>
+  <div class="band" aria-hidden="true"></div>
+
+
+  <section id="team" style="padding:64px 40px;background:linear-gradient(160deg,#F4EBDD,#EADFC8)">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:30px">
+    <div style="font:600 13px Poppins;letter-spacing:.2em;color:#B65C42">THE PEOPLE BEHIND THE PROJECT</div>
+    <h2 style="font-size:34px;color:#101F35;margin-top:8px">Meet Our Team</h2>
+    <p style="font-size:16px;line-height:1.7;max-width:650px;margin:10px auto 0">A collaborative effort exploring the rich heritage of Indian Knowledge Systems and its relationship with the ideas behind modern cryptography.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px">
+    <div class="card" style="background:#101F35;color:#F4EBDD;border:1px solid #D5A64A;border-top:5px solid #D5A64A;border-radius:14px;padding:22px;text-align:center">
+      <div style="width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#D5A64A;color:#101F35;font:700 22px Cinzel,serif">RB</div>
+      <div style="font:600 11px Poppins;letter-spacing:.14em;color:#D5A64A">GROUP LEADER</div>
+      <h3 style="font:600 18px Poppins;margin-top:8px;color:#F4EBDD">Rajveer Bajpai</h3>
+    </div>
+    <div class="card" style="background:#FBF7EF;border:1px solid rgba(213,166,74,.65);border-top:5px solid #176B63;border-radius:14px;padding:22px;text-align:center">
+      <div style="width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#176B63;color:#fff;font:700 22px Cinzel,serif">DD</div>
+      <div style="font:600 11px Poppins;letter-spacing:.14em;color:#176B63">MEMBER 1</div>
+      <h3 style="font:600 18px Poppins;margin-top:8px;color:#101F35">Devang Darade</h3>
+    </div>
+    <div class="card" style="background:#FBF7EF;border:1px solid rgba(213,166,74,.65);border-top:5px solid #754C78;border-radius:14px;padding:22px;text-align:center">
+      <div style="width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#754C78;color:#fff;font:700 22px Cinzel,serif">RS</div>
+      <div style="font:600 11px Poppins;letter-spacing:.14em;color:#754C78">MEMBER 2</div>
+      <h3 style="font:600 18px Poppins;margin-top:8px;color:#101F35">Risha Shetty</h3>
+    </div>
+    <div class="card" style="background:#FBF7EF;border:1px solid rgba(213,166,74,.65);border-top:5px solid #B65C42;border-radius:14px;padding:22px;text-align:center">
+      <div style="width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#B65C42;color:#fff;font:700 22px Cinzel,serif">AA</div>
+      <div style="font:600 11px Poppins;letter-spacing:.14em;color:#B65C42">MEMBER 3</div>
+      <h3 style="font:600 18px Poppins;margin-top:8px;color:#101F35">Ajay Avhad</h3>
+    </div>
+    <div class="card" style="background:#FBF7EF;border:1px solid rgba(213,166,74,.65);border-top:5px solid #D5A64A;border-radius:14px;padding:22px;text-align:center">
+      <div style="width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#D5A64A;color:#101F35;font:700 22px Cinzel,serif">RP</div>
+      <div style="font:600 11px Poppins;letter-spacing:.14em;color:#B65C42">MEMBER 4</div>
+      <h3 style="font:600 18px Poppins;margin-top:8px;color:#101F35">Rasesh Puthenpura</h3>
+    </div>
+    </div>
+  </div>
+  </section>
+
+  <section id="refs" style="padding:56px 40px;background:#101F35;color:#F4EBDD">
+  <div style="max-width:1100px;margin:0 auto">
+  <h2 style="font-size:30px;color:#D5A64A">References and Notes</h2>
+  <p style="line-height:1.7;font-size:15px"><b>Primary texts:</b> Aryabhatiya (Aryabhata, 499 CE); Brahmasphutasiddhanta (Brahmagupta, 628 CE); Ashtadhyayi (Panini); Charaka Samhita and Sushruta Samhita; Natyashastra; Yoga Sutras. <b>Modern studies:</b> Kim Plofker, <i>Mathematics in India</i> (Princeton, 2009); Singh, S., <i>The Code Book</i> (1999) for cryptography; Dutta, A. K., on Katapayadi in Kerala mathematics. Treat dates as approximate where scholars disagree, and verify with these sources before citing.</p>
+  <p style="font-size:14px;margin:0"><b>Primary modern source:</b> Ministry of Education, IKS Division (2025), <i>Indian Knowledge Systems: Indian Contributions to Science, Volume I</i>, eds. G. S. Murthy and K. Venkataraman, ISBN 978-93-49423-68-8. <br>Project objective: teach IKS first, then compare historical encoding with modern cryptography without inventing links between them.</p>
+  </div></section>
+  </div>
+  </template>
+  <script>
+  class DCLogic{constructor(p){this.props=p||{};this.state={}}setState(u){const n=typeof u==='function'?u(this.state):u;this.state=Object.assign({},this.state,n);schedule()}}
+
+  class Component extends DCLogic {
+    constructor(p){super(p);this.state={intro:true,stage:0,px:0,py:0,tl:{},btext:'netra agni chandra',skey:'QWERTYUIOPASDFGHJKLZXCVBNM',smsg:'HELLO',open:{},ktext:'ka ma la ya',ctext:'HELLO SANSKRIT',shift:3,mode:'enc',ans:'',verdict:'Not answered yet',points:0,done:false};}
+    componentDidMount(){this.t1=setTimeout(()=>this.setState({intro:false}),5000);this.t2=setInterval(()=>this.setState(x=>({stage:(x.stage+1)%4})),3500);}
+    componentWillUnmount(){clearTimeout(this.t1);clearInterval(this.t2);}
+    renderVals(){
+      const s=this.state;const X=this.more();
+      const cols=['#101F35','#176B63','#754C78','#B65C42','#101F35','#101F35','#176B63','#754C78','#B65C42'];
+      const B=[
+      ['गणित','Ganita','Indian Mathematics','Place-value numerals, zero, geometry and infinite series.','Indian mathematics grew from the ritual geometry of the Śulbasūtras to the analytical work of the Kerala school. It treats numbers as tools for astronomy, ritual and daily accounting, and developed several ways of writing numbers in verse.',['The decimal place-value system and zero as a number','Śulbasūtra geometry: constructions, approximations for √2 and π, the Baudhāyana-Pythagoras theorem','Number encodings: Bhūtasaṅkhyā, Āryabhaṭa’s alphanumeric system, Kaṭapayādi'],'Baudhāyana (Śulbasūtra), Āryabhaṭa, Brahmagupta; Mādhava (c. 1340–1420), Parameśvara and the Kerala school; Tantrasaṅgraha, Yuktibhāṣā','Kerala-school infinite series for sine, cosine, arctangent and π are studied in the history of analysis.','Ch. 4'],
+      ['ज्योतिष','Jyotisha','Astronomy and Calendar','Timekeeping, almanacs, planetary computation and observatories.','Jyotiṣa is the study of the sky for calendars, rituals and prediction of planetary positions. Bhāskara II describes it as the eyes of the Veda. Chapter 2 of the volume covers calendars and chronometry, and Chapter 3 covers instruments (yantras).',['The Pañcāṅga, the Indian almanac, built from tithi, nakṣatra and related elements','Planetary computation from Siddhāntic, Karaṇa and Vākya texts','Observational instruments, including the Jantar Mantar observatories'],'Vedāṅgajyotiṣa (Lagadha), Āryabhaṭa, Bhāskara II','The National Calendar of India and festival dates such as Kumbh Melā are calendrical computations.','Ch. 2 and 3'],
+      ['आयुर्वेद','Ayurveda','Traditional Medicine','A systems approach to health, diet, medicine and disease management.','Āyurveda treats health as a dynamic balance of body, mind and consciousness. Its core framework is tridoṣa: Vāta, Pitta and Kapha. It is documented in classical saṃhitās and has eight clinical specialities.',['Tridoṣa (V, P, K) as a common language for diet, season and symptoms','Dravyaguṇa Rasapañcaka: rasa, guṇa, vīrya, vipāka and prabhāva of a substance','Over 6,500 plants are used across India’s medical systems; the book profiles ten such as Āmalakī, Tulasī and Haridrā'],'Caraka and Suśruta (saṃhitās) and other ācāryas','Personalised diet, daily and seasonal regimens and multimodal treatment are discussed in the volume.','Ch. 6 and 7'],
+      ['व्याकरण','Vyakarana','Grammar and Linguistics','Rule-based analysis of Sanskrit and its sister Vedāṅgas.','Vyākaraṇa is one of the six Vedāṅgas, alongside Śikṣā (phonetics), Chandas (prosody), Nirukta (etymology), Kalpa (ritual) and Jyotiṣa. Bhāskara II calls grammar the face of the Veda. Pingala’s Chandaḥ-sūtra on metres also discusses counting and combinations.',['Śikṣā: correct sound production for recitation','Chandas: metres counted by syllables, used later as number words','Vyākaraṇa: compact rules that generate correct forms'],'Pāṇini (Aṣṭādhyāyī), Patañjali (Mahābhāṣya), Piṅgala (Chandaḥ-sūtra)','Scholars compare Pāṇini’s rule-based style with formal systems used in computing; treat this as a comparison, not a direct lineage.','Ch. 1 (Vedāṅgas, 1.10); Vol. I does not treat grammar in detail'],
+      ['वास्तु','Vastu Shastra','Architecture','Texts on planning, proportion and construction.','Vol. I lists architecture and town planning among subjects studied in ancient India but does not treat them in depth. The Śulbasūtra geometry of Chapter 4 shows how ritual altar construction drove geometrical knowledge, a related technical tradition.',['Śulbasūtra constructions for altars (see Ganita)','Planning, orientation and proportion in traditional building texts','Regional temple and town-planning traditions'],'Mayamata and Mānasāra are commonly cited Vāstu texts (not covered in Vol. I)','Traditional proportion and layout ideas are studied in architectural history.','Ch. 1 (1.3) and Ch. 4 (4.4); add a dedicated architecture source'],
+      ['योग','Yoga and Darshana','Philosophy','Schools of reasoned inquiry and practices of discipline.','Darśanas, also called Ānvīkṣikī, are India’s philosophical systems. They examine knowledge, reality and liberation through debate and reasoning. Sāṅkhya, for example, counts 25 fundamental principles (tattvas).',['Darśana: the schools of Indian philosophy','Sāṅkhya’s 25 tattvas, a classification of reality','Yoga as a discipline of body, breath and mind'],'Patañjali (Yoga Sūtras); Sāṅkhya, Nyāya and Vedānta texts','Philosophy and yoga remain active fields of study and practice.','Ch. 1 (1.11); Vol. I does not cover yoga practice in detail'],
+      ['धातु','Dhatu Vidya','Metallurgy and Chemistry','Metals, apparatus and processes of Rasāyanaśāstra.','Metallurgy was a cornerstone of technology in ancient India. Gold, iron, zinc and copper were worked, and iron and zinc, more reactive metals, were known in the pure state. The Ṛgveda (1.116.15) mentions an iron leg given to Viśpalā.',['Yantra: apparatus; Mūṣā: crucible; Puṭa: calcination pit','Dravya vargas: classification of materials','Links to medicine through metal preparations'],'Rasāyanaśāstra literature; Ṛgveda 1.116.15 for early iron','Foundations of materials science are drawn from these traditions.','Ch. 5'],
+      ['कृषि','Krishi','Agriculture and Ecology','Soil, water, weather, pests and animal husbandry.','Kṛṣi Pārāśara, over 2,500 years old, is described in the volume as perhaps the world’s first dedicated farming textbook. Later regional texts show a continuous tradition of testing and recording knowledge.',['Soil and land classification, ploughing, water management','Rainfall prediction, pest and disease management','Ethical animal husbandry and wildlife conservation'],'Kṛṣi Pārāśara; Vṛkṣāyurveda (Surapāla); Lokopakāra (Karnataka); Kṛṣi Gītā (Kerala)','The book compares chemical, organic and traditional farming and discusses modern challenges.','Ch. 8'],
+      ['संगीत','Sangeeta','Music and Performing Arts','Theory of music, drama, poetry and literature.','Vol. I lists Saṅgīta, Nāṭya, Kāvya and Sāhitya among the subjects studied in ancient India, with the fine arts taught alongside practical skills. It does not give a detailed account of music theory.',['Saṅgīta: music; Nāṭya: drama','Kāvya and Sāhitya: poetry and literature','Instrument design and sculpture as taught crafts'],'Bharata’s Nāṭyaśāstra is the classic treatise (not covered in Vol. I)','Classical music and dance continue as living traditions.','Ch. 1 (1.3); add a dedicated music source']];
+      const branches=B.map((b,i)=>({dev:b[0],name:b[1],sub:b[2],intro:b[3],ov:b[4],ideas:b[5].map(x=>({x})),who:b[6],ex:b[7],src:'MoE IKS Division (2025), Vol. I, '+b[8],c:cols[i],open:!!s.open[i],label:s.open[i]?'Close':'Learn more',toggle:()=>this.setState({open:{...s.open,[i]:!s.open[i]}})}));
+      const eras=[
+      {when:'Vedic period',t:'Oral tradition',d:'Hymns and ritual texts preserved by precise recitation across generations.',c:'#B65C42'},
+      {when:'Post-Vedic',t:'Sutras and treatises',d:'Compact rule-texts and specialised treatises in grammar, medicine and astronomy.',c:'#101F35'},
+      {when:'Classical',t:'Centres of learning',d:'Takshashila and Nalanda drew scholars; Nalanda flourished roughly from the 5th century CE.',c:'#176B63'},
+      {when:'Today',t:'Revival',d:'IKS is part of formal curricula in India and a field of research.',c:'#754C78'}];
+      const shift=+s.shift;const k=s.mode==='enc'?shift:26-shift;
+      const cout=s.ctext.replace(/[a-z]/gi,ch=>{const b=ch<'a'?65:97;return String.fromCharCode((ch.charCodeAt(0)-b+k)%26+b)}).toUpperCase();
+      const map={};
+      [['k','kh','g','gh','ṅ'],['c','ch','j','jh','ñ'],['ṭ','ṭh','ḍ','ḍh','ṇ'],['t','th','d','dh','n'],['p','ph','b','bh','m']].forEach((g,gi)=>g.forEach((x,i)=>{map[x]=gi===1||gi===3?(i+6)%10:i+1;}));
+      ['y','r','l','v','ś','ṣ','s','h','ḷ'].forEach((x,i)=>map[x]=i+1);
+      const toks=/kh|gh|ch|jh|ṭh|ḍh|th|dh|ph|bh|[kgcjṭḍtdpbṅñṇnmyrlvśṣshḷ]/g;
+      let digits=[];
+      s.ktext.toLowerCase().split(/[aāiīuūeoṛṝ\s]+/).forEach(cl=>{const m=cl.match(toks);if(m)digits.push(map[m[m.length-1]]);});
+      const kd=digits.join(' ')||'-';const kn=digits.slice().reverse().join('')||'-';
+      return {...X,branches,eras,ktext:s.ktext,ctext:s.ctext,shift:s.shift,cout:cout||'...',ans:s.ans,verdict:s.verdict,points:s.points,kdigits:kd,knum:kn,
+      encBg:s.mode==='enc'?'#176B63':'#4A5568',decBg:s.mode==='dec'?'#754C78':'#4A5568',
+      setK:e=>this.setState({ktext:e.target.value}),setC:e=>this.setState({ctext:e.target.value}),setS:e=>this.setState({shift:e.target.value}),setA:e=>this.setState({ans:e.target.value}),
+      doEnc:()=>this.setState({mode:'enc'}),doDec:()=>this.setState({mode:'dec'}),
+      check:()=>{const ok=s.ans.trim().toUpperCase()==='CONGRATULATIONS';this.setState({verdict:ok?'Correct!':'Not quite, try again.',points:ok&&!s.done?s.points+10:s.points,done:s.done||ok});}};
+    }
+    more(){const s=this.state;
+      const st=[{t:'Manuscript',big:'ज्ञानम्',cap:'Knowledge preserved on palm leaf and birch bark and kept alive by recitation.'},
+      {t:'Numerals',big:'क म ल → 1 5 3 → 351',cap:'Katapayadi turns the syllables ka-ma-la into digits, read right to left. It is a numbering aid, not encryption.'},
+      {t:'Binary',big:'351 = 101011111',cap:'Computers store the same number as bits. The representation changes, not the quantity.'},
+      {t:'Encryption',big:'Locked',cap:'Only this last step is cryptography: keys protect the bits. The ancient numeral step was never encryption.'}];
+      const stg=st.map((x,i)=>({...x,op:s.stage===i?1:0,ty:s.stage===i?0:14,lock:i===3,bg:s.stage===i?'#D5A64A':'transparent',fg:s.stage===i?'#101F35':'#F4EBDD',pick:()=>this.setState({stage:i})}));
+      const T=[['c. 1500–500 BCE','Vedic corpus','Hymns and ritual texts, transmitted orally with elaborate recitation methods. Composition dates are debated.'],
+      ['c. 4th century BCE','Panini','Ashtadhyayi, a compact rule system for Sanskrit grammar.'],
+      ['499 CE','Aryabhata','Aryabhatiya treats mathematics and astronomy in verse.'],
+      ['628 CE','Brahmagupta','Brahmasphutasiddhanta includes early written rules for arithmetic with zero.'],
+      ['5th–12th century CE','Nalanda','A major Buddhist monastic university that attracted scholars from across Asia.']];
+      const tl=T.map((m,i)=>({when:m[0],t:m[1],d:m[2],open:!!s.tl[i],dot:s.tl[i]?'#D5A64A':'#176B63',toggle:()=>this.setState({tl:{...s.tl,[i]:!s.tl[i]}})}));
+      const BW={kha:0,shunya:0,chandra:1,indu:1,bhumi:1,netra:2,nayana:2,agni:3,veda:4,indriya:5,rudra:11,surya:12};
+      const bd=s.btext.toLowerCase().split(/\s+/).filter(w=>w in BW).map(w=>BW[w]);
+      const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ',sh=+s.shift;
+      const outer=[...A].map((l,i)=>({l,t:`rotate(${i*360/26}deg) translateY(-104px)`}));
+      const inner=[...A].map((l,i)=>({l:A[(i+sh)%26],t:`rotate(${i*360/26}deg) translateY(-72px)`}));
+      const key=s.skey.toUpperCase().replace(/[^A-Z]/g,'');const ok=key.length===26&&new Set(key).size===26;
+      const sout=!ok?'Key must use all 26 letters once.':s.smsg.toUpperCase().replace(/[A-Z]/g,c=>s.mode==='enc'?key[A.indexOf(c)]:A[key.indexOf(c)]);
+      return {intro:s.intro,skip:()=>this.setState({intro:false}),stg,tl,px:s.px,py:s.py,
+      mv:e=>{const w=window.innerWidth||1,h=window.innerHeight||1;this.setState({px:(e.clientX/w-.5)*-24,py:(e.clientY/h-.5)*-24});},
+      btext:s.btext,setB:e=>this.setState({btext:e.target.value}),bdigits:bd.join(' ')||'-',bnum:bd.slice().reverse().join('')||'-',
+      outer,inner,rot:-sh*360/26,lockY:s.mode==='enc'?0:-7,lockLabel:s.mode==='enc'?'Lock closed':'Lock open',
+      skey:s.skey,smsg:s.smsg,sout,setSk:e=>this.setState({skey:e.target.value}),setSm:e=>this.setState({smsg:e.target.value})};
+    }
+  }
+
+  const comp=new Component({});let H=[],pending=false;
+  const root=document.getElementById('app');
+  const tplNodes=[...document.getElementById('tpl').content.childNodes];
+  function val(p,ctx){p=p.trim();if(p==='true')return true;if(p==='false')return false;return p.split('.').reduce((o,k)=>o==null?o:o[k],ctx)}
+  const WH=/^\{\{\s*([^}]+?)\s*\}\}$/;
+  function interp(v,ctx){return v.replace(/\{\{\s*([^}]+?)\s*\}\}/g,(_,p)=>{const r=val(p,ctx);return r==null?'':r})}
+  function build(n,ctx,out){
+  if(n.nodeType===3){out.push(document.createTextNode(interp(n.data,ctx)));return}
+  if(n.nodeType!==1)return;
+  const t=n.localName;
+  if(t==='sc-for'){const list=val(n.getAttribute('list').match(WH)[1],ctx)||[];const as=n.getAttribute('as');
+    list.forEach((it,i)=>{const c=Object.create(ctx);c[as]=it;c.$index=i;n.childNodes.forEach(k=>build(k,c,out))});return}
+  if(t==='sc-if'){if(val(n.getAttribute('value').match(WH)[1],ctx))n.childNodes.forEach(k=>build(k,ctx,out));return}
+  const el=document.createElementNS(n.namespaceURI,t);
+  for(const a of n.attributes){
+    if(a.name.startsWith('hint-'))continue;
+    const m=a.value.match(WH);
+    if(a.name.startsWith('on')&&m){let ev=a.name.slice(2);if(ev==='change')ev='input';H.push(val(m[1],ctx));el.setAttribute('data-e-'+ev,H.length-1);continue}
+    el.setAttribute(a.name,m?String(val(m[1],ctx)):interp(a.value,ctx));
+  }
+  n.childNodes.forEach(k=>build(k,ctx,{push:c=>el.appendChild(c)}));
+  out.push(el)}
+  function morph(a,b){
+  for(const at of [...a.attributes])if(!b.hasAttribute(at.name))a.removeAttribute(at.name);
+  for(const at of b.attributes)if(a.getAttribute(at.name)!==at.value)a.setAttribute(at.name,at.value);
+  if(a.tagName==='INPUT'&&a!==document.activeElement)a.value=b.getAttribute('value')||'';
+  morphKids(a,b)}
+  function morphKids(a,b){const ak=[...a.childNodes],bk=[...b.childNodes];
+  for(let i=0;i<bk.length;i++){const x=ak[i],y=bk[i];
+    if(!x)a.appendChild(y);
+    else if(x.nodeType===3&&y.nodeType===3){if(x.data!==y.data)x.data=y.data}
+    else if(x.nodeType===1&&y.nodeType===1&&x.nodeName===y.nodeName)morph(x,y);
+    else a.replaceChild(y,x)}
+  for(let i=ak.length-1;i>=bk.length;i--)a.removeChild(ak[i])}
+  function render(){H=[];const vals=comp.renderVals();const tmp=document.createElement('div');const out=[];
+  tplNodes.forEach(n=>build(n,vals,{push:c=>tmp.appendChild(c)}));morphKids(root,tmp)}
+  function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;render()})}
+  ['click','input','mousemove'].forEach(ev=>root.addEventListener(ev,e=>{const el=e.target.closest('[data-e-'+ev+']');if(el){const f=H[+el.getAttribute('data-e-'+ev)];if(typeof f==='function')f(e)}}));
+  render();if(comp.componentDidMount)comp.componentDidMount();
+  </script>
+  </body>
+  </html>
